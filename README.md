@@ -6,7 +6,6 @@ Tentu, ini versi `README.md` yang dibuat lebih menarik dengan tambahan gambar/em
 
 # 👋 **PakDe - Parkinson Detection: Deteksi Parkinson Lebih Awal, Hidup Lebih Berkualitas\!** 🧠✨
 
-[](https://www.google.com/search?q=link_website_anda_disini)
 
 **Capek nebak-nebak gejala Parkinson? 🤔 PakDe hadir sebagai sahabat cerdasmu\!** 🤖❤️
 
@@ -31,7 +30,7 @@ Nah, **PakDe** hadir dengan kekuatan **AI** dari **MobileNetV2** buat menganalis
   - **Frontend:** HTML, CSS, JavaScript, **Bootstrap 5** ✨
   - **Otak Pintar:** **TensorFlow** dengan arsitektur **MobileNetV2** 🧠
   - **Biar Makin Ciamik:** **AOS (Animate On Scroll) Library** untuk animasinya 💫
-  - **Ikon Kece:** **Font Awesome** buat ikon-ikon yang menarik \<0xF0\>\<0x9F\>\<0xAA\>\<0xA5\>
+  - **Ikon Kece:** **Font Awesome** buat ikon-ikon yang menarik
 
 ## ⚙️ **Yuk, Cobain PakDe\! (Cara Instalasi):**
 
@@ -126,7 +125,7 @@ Nah, **PakDe** hadir dengan kekuatan **AI** dari **MobileNetV2** buat menganalis
   - **Tengku Ryan Adiansyah Bani** - Si Jago Deployment 🚀
   - **Reisya Junita Putri** - Ahli Data 📊
   - **Vania Rachmawati Dewi** - Master AI 🧠
-  - **Kenny Aldebaran Roberts** - Kapten Proyek 👨‍питан
+  - **Kenny Aldebaran Roberts** - Kapten Proyek 👨‍
 
 ## ❗ **Ingat Baik-Baik ya\!**
 
