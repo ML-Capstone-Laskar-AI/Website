@@ -1,6 +1,4 @@
 # Website-PakDe
-INI MERUPAKAN REPOSITORY WEBSITE PAKDE ( PakDe - Parkinson Detection )
-Tentu, ini versi `README.md` yang dibuat lebih menarik dengan tambahan gambar/emote (gunakan kode markdown untuk menampilkannya, Anda bisa mengganti teks "[gambar]" dengan link gambar atau emoji yang sesuai di platform Anda):
 
 -----
 
