@@ -89,29 +89,6 @@ Nah, **PakDe** hadir dengan kekuatan **AI** dari **MobileNetV2** buat menganalis
   - PakDe ini picky soal gambar, maunya format JPEG atau PNG aja 😉.
   - Gambar yang kamu upload bakal diubah dulu ukurannya jadi 224x224 piksel biar otaknya PakDe gampang mikirnya 📐.
 
-## 📂 **Isi "Rumah" PakDe:**
-
-\`\`\`
-├── app.py                      \# Otaknya aplikasi Flask 🧠
-├── pakde\_folder\_model.keras    \# Model AI buat deteksi Parkinson 🤖
-├── static/                     \# Aset-aset keren PakDe ✨
-│   ├── css/                    \# File-file CSS biar tampilannya kece 😎
-│   │   └── style.css           \# Gaya utama PakDe 💅
-│   ├── img/                    \# Foto-foto tim super 🦸‍♂️🦸‍♀️
-│   │   ├── kenny.jpg
-│   │   ├── rei.png
-│   │   ├── ryan.jpg
-│   │   └── vania.png
-│   └── js/                     \# Script-script JavaScript biar interaktif 🚀
-│       └── main.js             \# Script utama
-└── templates/                  \# "Halaman-halaman" website PakDe 📄
-├── about.html              \# Info lengkap soal Parkinson ℹ️
-├── base.html               \# Kerangka dasar website 뼈대
-├── home.html               \# Halaman utama yang ramah 😊
-├── journal.html            \# Daftar jurnal-jurnal penting 🤓
-└── team.html               \# Kenalan sama tim pengembang 👋
-\`\`\`
-
 ## ⚙️ **Cara Kerja PakDe dalam Sekejap:**
 
 1.  Kamu **upload** gambar tulisan tanganmu 📤 (spiral, meander, atau gelombang).
