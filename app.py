@@ -1,8 +1,6 @@
 import os
 from flask import Flask, render_template, request, jsonify
 import tensorflow as tf
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing import image
 import numpy as np
 from PIL import Image
 import io
@@ -10,9 +8,14 @@ import base64
 
 app = Flask(__name__)
 
-# Load model
-model_path = os.path.join(os.path.dirname(__file__), 'pakde_folder_model.keras')
-model = load_model(model_path)
+# Load TFLite model
+model_path = os.path.join(os.path.dirname(__file__), 'pakde_model.tflite')
+interpreter = tf.lite.Interpreter(model_path=model_path)
+interpreter.allocate_tensors()
+
+# Get input and output tensors
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
 
 # Fungsi untuk preprocessing gambar
 def preprocess_image(img, target_size=(224, 224)):
@@ -65,8 +68,14 @@ def predict():
         # Preprocess gambar
         processed_img = preprocess_image(img)
         
-        # Prediksi
-        prediction = model.predict(processed_img)
+        # Set input tensor
+        interpreter.set_tensor(input_details[0]['index'], processed_img)
+        
+        # Run inference
+        interpreter.invoke()
+        
+        # Get output tensor
+        prediction = interpreter.get_tensor(output_details[0]['index'])
         
         # Dapatkan hasil prediksi
         prediction_value = float(prediction[0][0])
