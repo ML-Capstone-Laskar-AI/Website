@@ -1,4 +1,5 @@
 import os
+import time
 from flask import Flask, render_template, request, jsonify
 # Menggunakan TensorFlow untuk model Keras
 import tensorflow as tf
@@ -54,46 +55,32 @@ def team():
 @app.route('/predict', methods=['POST'])
 def predict():
     start_time = time.time()
+    if 'file' not in request.files:
+        return jsonify({'error': 'Tidak ada file yang diunggah'})
+    
+    file = request.files['file']
+    
+    if file.filename == '':
+        return jsonify({'error': 'Tidak ada file yang dipilih'})
+    
     try:
-        if 'file' not in request.files:
-            return jsonify({'error': 'Tidak ada file yang diunggah'})
-        
-        file = request.files['file']
-        
-        if file.filename == '':
-            return jsonify({'error': 'Tidak ada file yang dipilih'})
-        
-        try:
-            # Baca gambar
-            img = Image.open(io.BytesIO(file.read()))
-            
-            # Preprocess gambar
-            processed_img = preprocess_image(img)
-            
-            # Prediksi menggunakan model Keras
-            prediction = model.predict(processed_img)
-            
-            # Dapatkan hasil prediksi
-            prediction_value = float(prediction[0][0])
-            
-            # Tentukan hasil klasifikasi
-            if prediction_value > 0.5:
-                result = "Parkinson Terdeteksi"
-            else:
-                result = "Sehat"
-            
-            # Konversi confidence score ke persentase
-            confidence = prediction_value if prediction_value > 0.5 else 1 - prediction_value
-            confidence_percentage = round(confidence * 100, 2)
-            
-            return jsonify({
-                'result': result,
-                'confidence': confidence_percentage
-            })
+        img = Image.open(io.BytesIO(file.read()))
+        processed_img = preprocess_image(img)
+        prediction = model.predict(processed_img)
+        prediction_value = float(prediction[0][0])
+        result = "Parkinson Terdeteksi" if prediction_value > 0.5 else "Sehat"
+        confidence = prediction_value if prediction_value > 0.5 else 1 - prediction_value
+        confidence_percentage = round(confidence * 100, 2)
+        elapsed = time.time() - start_time
+        print(f"Prediction took {elapsed:.3f} seconds")
+        return jsonify({
+            'result': result,
+            'confidence': confidence_percentage
+        })
     
     except Exception as e:
-        elapsed_time = time.time() - start_time
-        print(f"Prediction failed after {elapsed_time:.3f} seconds")
+        elapsed = time.time() - start_time
+        print(f"Prediction failed after {elapsed:.3f} seconds")
         return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
