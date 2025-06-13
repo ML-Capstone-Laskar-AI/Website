@@ -54,7 +54,6 @@ def team():
 # Route untuk prediksi
 @app.route('/predict', methods=['POST'])
 def predict():
-    import time
     start_time = time.time()
     print("Predict endpoint hit", flush=True)
 
