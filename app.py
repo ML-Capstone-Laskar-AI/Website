@@ -54,35 +54,52 @@ def team():
 # Route untuk prediksi
 @app.route('/predict', methods=['POST'])
 def predict():
+    import time
     start_time = time.time()
+    print("Predict endpoint hit", flush=True)
+
     if 'file' not in request.files:
+        print("No file part in request", flush=True)
         return jsonify({'error': 'Tidak ada file yang diunggah'})
-    
+
     file = request.files['file']
-    
+
     if file.filename == '':
+        print("Empty filename", flush=True)
         return jsonify({'error': 'Tidak ada file yang dipilih'})
-    
+
     try:
+        print("Reading image", flush=True)
         img = Image.open(io.BytesIO(file.read()))
+        print("Image opened", flush=True)
+
+        print("Preprocessing image", flush=True)
         processed_img = preprocess_image(img)
+        print("Image preprocessed", flush=True)
+
+        print("Running model.predict", flush=True)
+        t_pred_start = time.time()
         prediction = model.predict(processed_img)
+        t_pred_end = time.time()
+        print(f"Prediction itself took {t_pred_end - t_pred_start:.3f} seconds", flush=True)
+
         prediction_value = float(prediction[0][0])
         result = "Parkinson Terdeteksi" if prediction_value > 0.5 else "Sehat"
         confidence = prediction_value if prediction_value > 0.5 else 1 - prediction_value
         confidence_percentage = round(confidence * 100, 2)
+
         elapsed = time.time() - start_time
-        print(f"Prediction took {elapsed:.3f} seconds")
+        print(f"Prediction completed in {elapsed:.3f} seconds", flush=True)
         return jsonify({
             'result': result,
             'confidence': confidence_percentage
         })
-    
+
     except Exception as e:
         elapsed = time.time() - start_time
-        print(f"Prediction failed after {elapsed:.3f} seconds")
+        print(f"Prediction failed after {elapsed:.3f} seconds: {str(e)}", flush=True)
         return jsonify({'error': str(e)})
-
+        
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
 
