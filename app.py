@@ -53,43 +53,47 @@ def team():
 # Route untuk prediksi
 @app.route('/predict', methods=['POST'])
 def predict():
-    if 'file' not in request.files:
-        return jsonify({'error': 'Tidak ada file yang diunggah'})
-    
-    file = request.files['file']
-    
-    if file.filename == '':
-        return jsonify({'error': 'Tidak ada file yang dipilih'})
-    
+    start_time = time.time()
     try:
-        # Baca gambar
-        img = Image.open(io.BytesIO(file.read()))
+        if 'file' not in request.files:
+            return jsonify({'error': 'Tidak ada file yang diunggah'})
         
-        # Preprocess gambar
-        processed_img = preprocess_image(img)
+        file = request.files['file']
         
-        # Prediksi menggunakan model Keras
-        prediction = model.predict(processed_img)
+        if file.filename == '':
+            return jsonify({'error': 'Tidak ada file yang dipilih'})
         
-        # Dapatkan hasil prediksi
-        prediction_value = float(prediction[0][0])
-        
-        # Tentukan hasil klasifikasi
-        if prediction_value > 0.5:
-            result = "Parkinson Terdeteksi"
-        else:
-            result = "Sehat"
-        
-        # Konversi confidence score ke persentase
-        confidence = prediction_value if prediction_value > 0.5 else 1 - prediction_value
-        confidence_percentage = round(confidence * 100, 2)
-        
-        return jsonify({
-            'result': result,
-            'confidence': confidence_percentage
-        })
+        try:
+            # Baca gambar
+            img = Image.open(io.BytesIO(file.read()))
+            
+            # Preprocess gambar
+            processed_img = preprocess_image(img)
+            
+            # Prediksi menggunakan model Keras
+            prediction = model.predict(processed_img)
+            
+            # Dapatkan hasil prediksi
+            prediction_value = float(prediction[0][0])
+            
+            # Tentukan hasil klasifikasi
+            if prediction_value > 0.5:
+                result = "Parkinson Terdeteksi"
+            else:
+                result = "Sehat"
+            
+            # Konversi confidence score ke persentase
+            confidence = prediction_value if prediction_value > 0.5 else 1 - prediction_value
+            confidence_percentage = round(confidence * 100, 2)
+            
+            return jsonify({
+                'result': result,
+                'confidence': confidence_percentage
+            })
     
     except Exception as e:
+        elapsed_time = time.time() - start_time
+        print(f"Prediction failed after {elapsed_time:.3f} seconds")
         return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
